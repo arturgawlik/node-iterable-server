@@ -7,8 +7,8 @@ class IterableServer {
 
   async *[Symbol.asyncIterator]() {
     while (true) {
+      const { resolve, promise } = this.#getPromise();
       this.#server.once("request", (req, res) => resolve({ req, res }));
-      const { resolve, rejected, promise } = this.#getPromise();
       yield await promise;
     }
   }
